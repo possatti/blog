@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Lucas Possatti
 subtitle:
 description:
 author: John Doe
-language:
-timezone:
+language: en
+timezone: America/Fortaleza
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
