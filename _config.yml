@@ -1,3 +1,56 @@
+# Hueman Configuration
+
+# Logo Url
+# Please enter the absolute path to your logo file
+# or remove the following line with replacing logo-header.png with your own logo
+#logo: http://ppoffice.github.io/hexo-theme-hueman/css/images/logo-header.png
+
+# Header
+menu:
+  Home: /
+  # Delete this row if you don't want categories in your header nav bar
+  Categories:
+  About: /about/index.html
+
+# Content
+fancybox: true
+
+# Thumbnail
+thumbnail: true
+
+# Scroll Loading
+scrollLoading: true
+
+# Sidebar
+social_links:
+#  twitter:
+#  facebook:
+  google_plus: https://plus.google.com/+LucasPossatti
+  github: https://github.com/possatti/
+#  weibo:
+#  rss:
+widgets:
+- recent_posts
+- category
+- archive
+- tag
+- tagcloud
+- links
+
+# Links
+#links:
+#  Hexo: http://hexo.io
+
+# Don't Use Google APIs if you are in google-blocked areas
+use_google_apis: true
+
+# Miscellaneous
+google_analytics: UA-60892717-1
+favicon: /favicon.png
+fb_admins:
+fb_app_id:
+
+
 # Hexo Configuration
 ## Docs: http://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
@@ -12,7 +65,7 @@ timezone: America/Fortaleza
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://lucas.possatti.com.br/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
