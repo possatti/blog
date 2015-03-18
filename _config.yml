@@ -123,4 +123,3 @@ deploy:
   type: git
   repo: https://github.com/possatti/possatti.github.io
   branch: master
-  message: Atualização do site: {{ now("YYYY-MM-DD HH:mm:ss") }}
