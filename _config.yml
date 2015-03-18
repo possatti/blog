@@ -10,7 +10,7 @@ menu:
   Home: /
   # Delete this row if you don't want categories in your header nav bar
   Categories:
-  About: /about/index.html
+  Sobre: /about/index.html
 
 # Content
 fancybox: true
@@ -62,7 +62,7 @@ title: Lucas Possatti
 subtitle:
 description:
 author: Lucas Possatti
-language: en
+language: pt-BR
 timezone: America/Fortaleza
 
 # URL
