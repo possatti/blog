@@ -50,6 +50,8 @@ favicon: /favicon.png
 fb_admins:
 fb_app_id:
 
+# Disqus configuration
+disqus_shortname: possatti
 
 # Hexo Configuration
 ## Docs: http://hexo.io/docs/configuration.html
