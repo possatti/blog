@@ -120,4 +120,7 @@ theme: hueman
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/possatti/possatti.github.io
+  branch: master
+  message: Atualização do site: {{ now("YYYY-MM-DD HH:mm:ss") }}
