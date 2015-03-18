@@ -1,16 +1,14 @@
 ---
 layout: post
-title: "Jekylll"
+title: "Jekyll"
 description: "Breve introdução ao funcionamento do Jekyll, como ele pode ser usado e para quê."
 modified: 2014-08-22 07:27:29 -0300
 tags: [jekyll]
-image:
-  feature: 
-  credit: 
-  creditlink: 
 comments: true
 share: true
 ---
+
+![](/images/jekyll-logo.png)
 
 Nesse primeiro post eu resolvi escrever sobre a ferramenta, chamada Jekyll, que eu usei para criar o meu primeiro blog, e como ela pode ser útil para vários propósitos.
 
