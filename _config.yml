@@ -13,13 +13,13 @@ menu:
   Sobre: /about/index.html
 
 # Content
-fancybox: true
+fancybox: false
 
 # Thumbnail
 thumbnail: true
 
 # Scroll Loading
-scrollLoading: true
+scrollLoading: false
 
 # Sidebar
 social_links:
