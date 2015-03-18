@@ -35,7 +35,7 @@ widgets:
 - archive
 - tag
 - tagcloud
-- links
+#- links
 
 # Links
 #links:
