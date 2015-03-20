@@ -3,7 +3,7 @@
 # Logo Url
 # Please enter the absolute path to your logo file
 # or remove the following line with replacing logo-header.png with your own logo
-#logo: http://ppoffice.github.io/hexo-theme-hueman/css/images/logo-header.png
+logo: /images/logo-white.png
 
 # Header
 menu:
@@ -46,7 +46,7 @@ use_google_apis: true
 
 # Miscellaneous
 google_analytics: UA-60892717-1
-favicon: /favicon.png
+favicon: /images/logo-black.png
 fb_admins:
 fb_app_id:
 
