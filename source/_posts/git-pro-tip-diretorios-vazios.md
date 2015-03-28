@@ -5,6 +5,8 @@ tags: [git, protip]
 comments: true
 ---
 
+![](/images/git-logo.png)
+
 Nesse post vou falar sobre algo que me aborrecia quando comecei a usar o git. E que pode trazer dificuldades para outros que estejam iniciando com o git. Falarei sobre o fato de que ele não registra diretórios vazios no repositório.
 
 ## O problema
