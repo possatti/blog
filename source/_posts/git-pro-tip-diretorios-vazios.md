@@ -3,6 +3,7 @@ title: "Git Pro Tip: Diretórios vazios"
 date: 2015-03-25 21:05:29
 tags: [git, protip]
 comments: true
+share: true
 ---
 
 ![](/images/git-logo.png)
