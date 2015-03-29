@@ -112,7 +112,7 @@ Com essa URL, você poderá usar o seu celular, por exemplo, para visualizar a L
 
 ## E agora?
 
-Você pode continuar interagindo com o servidor, e investigar o código, para ver como o projeto funciona. Um bom ponto de partida para aprender mais é o próprio [site do Zetta][zetta], apesar de que como eu disse, a documentação do projeto falha em alguns pontos. E aprender mais sobre o [NodeJS][node] com certeza lhe ajudará a desenvolver aplicações com o Zetta.
+Você pode continuar interagindo com o servidor. E investigar o código, para ver como o projeto funciona. Conhecimentos de NodeJS e JavaScript com certeza irão lhe ajudar. Para aprender mais sobre o Zetta, um bom ponto de partida é o seu próprio [site][zetta], apesar de que, como eu disse, a documentação do projeto falha em alguns pontos.
 
 E se estiver interessado, você pode tentar construir sua própria aplicação, segundo uma necessidade ou um desejo que você tem. Comesse com algo simples e vá aperfeiçoando a medida que desejar.
 
