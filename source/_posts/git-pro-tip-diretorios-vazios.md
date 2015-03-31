@@ -1,5 +1,6 @@
 ---
 title: "Git Pro Tip: Diretórios vazios"
+description: "O git não grava pastas vazias em seus repositórios. Entenda porquê, e como contornar o problema."
 date: 2015-03-25 21:05:29
 tags: [git, protip]
 comments: true

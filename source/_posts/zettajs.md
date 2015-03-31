@@ -1,5 +1,6 @@
 ---
 title: "ZettaJS"
+description: "Introdução a internet das coisas, e exemplo de aplicação utilizando o Zetta."
 date: 2015-03-31 01:11:36
 tags: [IoT, javascript]
 comments: true

@@ -1,6 +1,6 @@
 ---
 title: "Jekyll"
-description: "Breve introdução ao funcionamento do Jekyll, como ele pode ser usado e para quê."
+description: "Breve introdução ao Jekyll, um gerador de websites estáticos, com foco em blogs."
 date: 2014-08-22 07:27:29 -0300
 updated: 2015-03-25 04:56:29 -0300
 tags: [jekyll]
