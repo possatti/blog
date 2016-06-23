@@ -317,10 +317,31 @@ Se você for criar um script que tenha uma interface extensa e complexa, que pre
 
 [pokemonsay]: https://github.com/possatti/pokemonsay/blob/master/pokemonsay.sh
 
+## Wildcards (Globs)
+
+`?` representa qualquer caractere. E `*`, qualquer quantidade de qualquer caractere.
+
+```sh
+ls $HOME/fotos/viagem/*.jpg  # Imprime o nome de todas as fotos da viagem
+ls $HOME/fotos/viagem/*-2015-01-??.jpg  # Apenas as fotos de janeiro
+```
+
+## Substituição de comandos
+
+As vezes é útil guardarmos a saída de algum programa. Ao invés de imprimir na tela, gostaríamos de pegar esse valor e guardar em uma variável, por exemplo. Para isso, usamos [substituição de comandos][wiki-command-substitution]: `$(prog)`, ou ``prog``. Até onde eu sei, não há diferença entre as duas formas. Eu, particularmente, prefiro o segundo.
+
+```sh
+echo `pwd`  # Imprime o diretório atual
+arquivos_de_texto=$(ls *.txt)
+echo $arquivos_de_texto  # Imprime todos os "txt" do diretório atual
+echo "2 + 2 = $(expr 2 + 2)"  # Imprime '2 + 2 = 4'
+```
+
+[wiki-command-substitution]: https://en.wikipedia.org/wiki/Command_substitution
 
 ## Loops
 
-Temos duas opções de loop aqui: `while` e `for`. Cada um útil em uma situação específica.
+Temos duas opções de loop aqui: `while` e `for`. Cada um é útil em uma situação específica.
 
 ### For loop
 
@@ -328,18 +349,27 @@ Temos duas opções de loop aqui: `while` e `for`. Cada um útil em uma situaç�
 #!/bin/sh
 
 # Pega todos os "txt" do diretório local. Mais sobre essa sintáxe depois.
-arquivos=`ls *.txt`
+arquivos_txt=`ls *.txt`
 
-for arquivo in $arquivos; do
+for arquivo in $arquivos_txt; do
+	if [ $arquivo == critical.txt ]; then
+		continue  # Pula 'critical.txt' para que ele não seja apagado
+	fi
 	rm $arquivo
 done
 ```
 
+
+
+Quando você desejar iterar sob uma sequência de números que você determinou, você pode usar o comando `seq`. Exemplo: `seq 3` irá imprimir `1 2 3` (separados por `\n`, na verdade) e `seq 0 3` irá imprimir `0 1 2 3`. No exemplo abaixo, nós criamos uma sequência de 0 à 10, e elevamos cada um deles ao quadrado.
+
 ```sh
-for i in words; do
-	break
+for i in $(seq 0 10); do
+	i_quadrado=$(expr $i '*' $i)
+	echo "$i ao quadrado é igual a: $i_quadrado"
 done
 ```
+
 
 ### While
 
@@ -359,29 +389,133 @@ rm saci-pererê.txt
 
 ## Pipe e redireção
 
+Essa é provavelmente a coisa mais interessante que você pode fazer em shell script. É usando Pipes (literalmente, canos, ou tubos) e redireção que você vai conseguir libertar os verdadeiros poderes do shell script.
+
+Antes de falar sobre isso, eu tenho que explicar uma coisa mais básica: Fil. No mundo do Unix e Linux existe o que nós chamamos de "file descriptor". Qualquer programa têm três *file descriptors*: Standard Input, Standard Output, e Standard Error. Comumente abreviados: `stdin`, `stdout`, `stderr`. O programa irá ler dados do `stdin`, irá escrever em `stdout` . Muitas vezes, o texto vindo de `stdin` será o texto digitado pelo teclado, pelo usuário. Mas muitas outras vezes, esse texto será recebido de forma programática.
+
+Quando usamos pipe `|`, nós estamos conectando o `stdout` do comando à esquerda, com o `stdin` do comando à direita. É possível fazer vários pipes em sequência também. Você deve imaginar que o texto está fluindo da esquerda para a direita, e que cada comando está modificando o texto, ou agindo de alguma forma sobre ele. Vamos à um exemplo simples:
+
+```sh
+echo "LARANJA_123" | tr '[:upper:]' '[:lower:]' # Imprime "laranja_123" (minúsculo)
+```
+
+O `tr` é um programa que troca alguns caracteres em outros (`man tr`). Perceba que o `echo` escreveu o texto em `stdout` (normalmente seria impresso, mas não foi devido ao pipe), e seu `stdout` foi redirecionado para o `stdin` de `tr`.  E o `tr`, após manipular o texto, escreveu o resultado em seu `stdout`, que foi impresso na tela.
+
+```sh
+FRUTA='LARANJA_123'
+echo $FRUTA | tr '[:upper:]' '[:lower:]' | tr -d '[_0-9]'  # Imprime "laranja"
+```
+
+Mais um pipe agora. Dessa vez, o `stdout` do primeiro `tr` não é impresso, mas é redirecionado para o `stdin` do segundo `tr`. O segundo `tr` irá ler o texto de seu `stdin`, modificá-lo, e escrever em `stdout`. Como não há mais nenhuma redireção, seu `stdout` será impresso.
+
+Não sei se já conseguiu perceber. Mas isso é incrivelmente útil!
+
+
+Também podemos fazer redireções usando arquivos. `>` é usado para redirecionar o `stdout` para um arquivo, porém apaga o conteúdo do arquivo, se ele já existir. `>>` faz o mesmo que `>`, porém não apaga o conteúdo original do arquivo. Ao final do script abaixo, teremos um arquivo com três frutas: Cajú, Mamão e Pêra.
+
+```sh
+# Escreve "Banana" no arquivo "frutas.txt"
+echo "Banana" > frutas.txt
+# Apaga o conteúdo do arquivo inteiro, e depois escreve "Cajú" nele
+echo "Cajú" > frutas.txt
+# Escreve "Mamão" no final do arquivo, sem apagar seu conteúdo
+echo "Mamão" >> fruta.txt
+echo "Pêra" >> fruta.txt
+```
+
+`<`
+Agora outro exemplo
+
+Pêra! (huehue.) Se existe `>` e `>>`, deve existir também `<<`, já que existe `<`. Sim, senhor. E o nome disso é "[Here Document][wiki-here-document]". Ao invés de ler de um arquivo (como `<`) o texto será lido do próprio script.
+
+[wiki-here-document]: https://en.wikipedia.org/wiki/Here_document
+
+```sh
+tr '[:lower:]áãçó' '[:upper:]ÁÃÇÓ' << EOF
+O empenho em analisar o aumento do diálogo entre os diferentes
+setores produtivos estimula a padronização dos modos de operação
+convencionais.
+Desta maneira, o julgamento imparcial das eventualidades cumpre
+um papel essencial na formulação do impacto na agilidade decisória.
+EOF
+```
+
+Perceba que depois do `<<` temos um token (`EOF`) que abre o texto do [lerolero.com][lerolero], e em seguida o **mesmo token** deverá ser repetido em sua própria linha, para fechar o texto. O texto que está entre os dois `EOF` (*end of file*, fim de arquivo), será usado como entrada de dados para o `tr`, que por usa vez imprimirá o texto inteiro em letras maiúsculas. É comum usarmos a sigla `EOF` como token, mas pode ser qualquer palavra, como `LEROLERO`, ou `HELLO_WORLD!`.
+
+[lerolero]: http://www.lerolero.com/
+
+Exercício mental:
+
+```sh
+#!/bin/sh
+sh << MIND
+sh << BLOWING
+echo "Mind blowing."
+BLOWING
+MIND
+```
+
+Cada file descriptor tem um número associado: `stdin`, `0`; `stdout`, `1`; e `stderr`, `2`. É comum redirecionarmos o `stderr` de um programa para o `stdout` do mesmo programa. Fazemos isso usando `2>&1`. Isso é muito útil quando temos um programa que escreve coisas importante para `stderr`, porém nós queremos gravar em um arquivo, por exemplo. Para isso fazemos `prog 2>&1 > meu.log`. Ou ainda, gravarmos `stdout` e `stderr` em diferentes arquivos: `prog 1> meu.log 2> erros.log`.
+
+E se quisermos direcionar o `stdout` para `stderr`, usamos `1>&2`. Você pode usar isso para escrever em `stderr` no seu script através de `echo 1>&2`.
+
+```sh
+echo "Hello"  # Imprime através do `stdout`
+echo "World" 1>&2  # Imprime na tela, porém através do `stderr`
+```
+
+Redireções também funcionam com estrutras como `for` e `while`. Quando você chega nesse nível as coisas podem ficar extremamente confusas. O exemplo abaixo, lê as linhas de um arquivo `lower.txt`, colocando cada uma delas na variável `$linha`, que é `echo`ada para `tr`, que transforma tudo em maíusculas. Porém o `stdout` de `tr` vai para um segundo `tr` que apaga as vogais do texto. E em seguida, o resultado é escrito em `UPPER.txt`. Loucura.
+
+```sh
+#!/bin/sh
+
+while read linha; do
+	echo $linha | tr '[:lower:]' '[:upper:]'
+done < lower.txt | tr -d 'aeiou' > UPPER.txt
+```
+
 
 ## Funções
 
+Funções funcionam como mini-scripts contidas no seu script. Elas são declaradas como `foo() { ... }` e são invocadas como qualquer comando: `foo arg1 arg2 arg3 ...`.
 
-Declarando funções você irá usá-las como pequenos comandos
-
-Add() {
-	
+```sh
+somar() {
+	expr $1 '+' $2
 }
 
-## Matemática
-De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são: `expr`, `bc`
-## Manipulação de texto
-Umas das coisas mais comuns que você vai fazer em Shell Script é manipular texto. Existem várias formas, minha sugestão é que você aprenda bem, um dos seguintes: `sed`, `awk`, `perl`
-## Substituição de comandos
-Assim: `$()` ` `` `
-[wiki-command-substitution]: https://en.wikipedia.org/wiki/Command_substitution
-## Wildcards (Globs)
-Como: `*` , `?`
-## Here documents
-[wiki-here-document]: https://en.wikipedia.org/wiki/Here_document
+resultado=`somar 12 21`
+echo $resultado  # Imprime '33'
+```
+
+**Cuidado:** as funções podem alterar variáveis do escobo global:
+
 ```sh
-$ cat << EOF
-Texto
-EOF
-``
+troll() {
+	x=2
+}
+x=1
+echo $x  # Imprime '1'
+troll
+echo $x  # Imprime '2'
+```
+
+## Matemática
+
+De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são: `expr`, `bc`
+
+## Manipulação de texto
+
+Umas das coisas mais comuns que você vai fazer em Shell Script é manipular texto. Por isso é bom que você saiba fazer isso bem. Minha sugestão é que você aprenda bem, um dos seguintes: `sed`, `awk` ou `perl`. Eu costumo usar o `sed`, e explicar como ele funciona é um tutorial em si. Mas veja algumas coisas básica que você pode fazer com `sed`.
+
+```sh
+# Imprime todo o texto recebido, porém substituindo "banana" por "maçã"
+sed 's/banana/maça/'
+# Imprime apenas as linhas que começam com "Erro" ou "erro"
+sed -nr '/^[Ee]rror/p'
+# Formata números de telefone: 27988882222 para (27) 9 8888-2222
+# '.' poderia ser '[[:digit:]]' para ficar mais específico
+sed -r 's/.{2}.{1}.{4}.{4})/(\1) \2 \3-\4/'
+```
+
+Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido.
