@@ -301,12 +301,13 @@ A maioria dos programas de linha de comando recebem e processam argumentos que s
 ```sh
 $ comando arg1 arg2 arg3 arg4 
 ```
-E para acessarmos os argumentos, usamos as variáveis `$1`, `$2`, e etc para acessarmos o primeiro argumento, o segundo argumento e daí em diante. `$0` é o nome do seu script (faz sentido, né?). E `$@` representa todos os argumentos juntos em sequência (sem o `$0`).
+E para acessarmos os argumentos, usamos as variáveis `$1`, `$2`, `$3` e etc para acessarmos o primeiro argumento, o segundo argumento e daí em diante. `$0` é o nome do seu script (até que faz sentido, né?). E `$@` representa todos os argumentos, juntos e em sequência (sem o `$0`). E `$#` é o número de argumentos recebidos (também sem o `$0`).
 
 ```sh
-echo $0  # Imprime o nome do script.
-echo $1 $2 $3  # Imprime os primeiros três argumentos.
-echo $@  # Imprime todos os argumentos.
+echo "\$0: $0"  # Imprime o nome do script.
+echo "\$@: $@"  # Imprime todos os argumentos.
+echo "\$#: $#"  # Imprime o número de argumentos.
+echo "\$1 \$2 \$3: $1 $2 $3"  # Imprime os primeiros três argumentos.
 ```
 
 Quando um argumento tem a forma `-e` ou `--exemplo`, ele é chamado de uma opção, e geralmente é... opcional. Você usou opções este tempo inteiro, deve saber como elas funcionam. Mas só para o caso de você não saber, vou explicar um pouquinho. Algumas opções devem ser acompanhadas de um valor como: `--garrafas=12`, `--garrafas 12`, `-g12`. Ou: `--arquivo="file.txt"`, `--arquivo "file.txt"`. As opções podem ser usadas não importa a ordem: `cmd --input "i.txt" --output "o.txt"` deveria ser a mesma coisa que `cmd --output "o.txt" --input "i.txt"`. E as opções geralmente são misturadas com argumentos: `echo "hello" -n` (`n` é uma opção e `"hello"`, um argumento).
@@ -480,13 +481,27 @@ done < lower.txt | tr -d 'aeiou' > UPPER.txt
 Funções funcionam como mini-scripts contidas no seu script. Elas são declaradas como `foo() { ... }` e são invocadas como qualquer comando: `foo arg1 arg2 arg3 ...`.
 
 ```sh
+#!/bin/sh
+
 somar() {
+	# Soma os dois argumentos recebidos *pela função*
 	expr $1 '+' $2
 }
 
-resultado=`somar 12 21`
-echo $resultado  # Imprime '33'
+# Processa todos os argumentos recebidos pelo script
+# somando todos eles.
+resultado=0
+while [ -n "$1" ]; do
+	# Soma o argumento com o resultado atual.
+	resultado=`somar $resultado $1`
+	# Coloca o $2 no lugar do $1, $3 no lugar do $2, etc.
+	shift
+done
+
+echo "Soma total: $resultado"
 ```
+
+Perceba que dentro da função `$1` e `$2` são argumentos **recebidos pela função**, e não pelo script. Do lado de fora da função, nós estamos usando o `$1` que é o primeiro argumento do nosso script. Veja que as duas coisas não se misturam.
 
 **Cuidado:** as funções podem alterar variáveis do escobo global:
 
@@ -496,13 +511,67 @@ troll() {
 }
 x=1
 echo $x  # Imprime '1'
-troll
+troll  # Muda o valor de 'x'
 echo $x  # Imprime '2'
+```
+
+Eu acho que isso é o que tem de mais importante para falar sobre as funções em shell script. Acho que você deve saber o que fazer a partir disso. Mas me sinto culpado de não colocar um exemplo um pouco mais complexo. Então abaixo está uma função que cálcula o fatorial de um número.
+
+```sh
+fatorial() {
+	if [ "$1" -gt "1" ]; then
+		i=`expr $1 - 1`
+		j=`fatorial $i`
+		k=`expr $1 \* $j`
+		echo $k
+	else
+		echo 1
+	fi
+}
+
+# Calcula os 5 primeiros fatoriais.
+for n in `seq 5`; do
+	fatorial $n
+done
 ```
 
 ## Matemática
 
-De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são: `expr`, `bc`
+De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são: `expr`, `bc`. E ["este link"][math-sh] me ajudou bastante a entender as coisas.
+
+[math-sh]: http://faculty.salina.k-state.edu/tim/unix_sg/bash/math.html
+
+O mais básico de todos provavelmente é o `expr`. Ele serve para fazer contas simples, mas deixa a desejar para contas mais complexas e de número flutuante. E é um pouco chato quanto a espaços, você precisar separar cada um dos números e operadores, pois eles devem ser recebidos como diferentes argumentos. E você precisa ter cuidado com o `*` de multiplicação, para que ele não seja interpretado como um wildcard antes mesmo de ser recebido pelo `expr`, então use `\*` ou `'*'`. O mesmo vale para os parênteses, use `\( ... \)`, ou `'(' ... ')'`
+
+```sh
+expr 2 + 2  # "4"
+expr 2+2  # "2+2" - lol
+expr 2+2 + 2  # "expr: non-integer argument"
+expr 2 '*' 3  # "6"
+expr 8 \* 0.5 # "expr: non-integer argument"
+expr 8 / 4 # "2"
+expr 8 / 5 # "1" - A divisão é inteira
+expr \( 3 + 7 \) / 2  # "5"
+```
+
+Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém há outro incoveniente, você tem que passar as contas para ele por pipe. Ele não processa os argumentos. E contas com muitas casas decimais use `bc -l`.
+
+```sh
+echo "2 + 2" | bc  # "4"
+echo "2+2 + 2" | bc  # "6"
+echo "2*3" | bc  # "6"
+echo "8 * 0.5" | bc  # "4.0"
+echo "8 / 4" | bc  # "2"
+echo "8 / 5" | bc  # "1"
+echo "8 / 5" | bc -l  # "1.60000000000000000000"
+echo "(3 + 7) /2" | bc  # "5"
+echo "2.22 / 1.22 * 0.75" | bc  # ".75" - What???
+echo "2.22 / 1.22 * 0.75" | bc -l  # "1.36475409836065573770" - Hmmmm
+```
+
+Eu nunca usei muito o `bc`, mas parece que ele é capaz de fazer [muito mais][wiki-bc]. Se você precisar de expressões matemáticas complexas, dê uma olhada com carinho.
+
+[wiki-bc]: https://en.wikipedia.org/wiki/Bc_(programming_language)#GNU_bc
 
 ## Manipulação de texto
 
