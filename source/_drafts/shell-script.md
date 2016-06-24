@@ -537,11 +537,9 @@ done
 
 ## Matemática
 
-De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são: `expr`, `bc`. E ["este link"][math-sh] me ajudou bastante a entender as coisas.
+De vez em quando precisamos fazer uma conta ou outra em Shell Script. A forma como fazemos isso é usando qualquer comando que faça contas. Yeah! Alguns dos mais úteis são `expr` e `bc`.
 
-[math-sh]: http://faculty.salina.k-state.edu/tim/unix_sg/bash/math.html
-
-O mais básico de todos provavelmente é o `expr`. Ele serve para fazer contas simples, mas deixa a desejar para contas mais complexas e de número flutuante. E é um pouco chato quanto a espaços, você precisar separar cada um dos números e operadores, pois eles devem ser recebidos como diferentes argumentos. E você precisa ter cuidado com o `*` de multiplicação, para que ele não seja interpretado como um wildcard antes mesmo de ser recebido pelo `expr`, então use `\*` ou `'*'`. O mesmo vale para os parênteses, use `\( ... \)`, ou `'(' ... ')'`
+O mais básico é o `expr`. Ele serve para fazer contas simples, mas deixa a desejar para contas mais complexas e de número flutuante. E ele é um pouco chato quanto aos espaços. Você precisa separar cada um dos números e operadores, pois eles devem ser recebidos como diferentes argumentos. E você precisa ter cuidado com o `*` de multiplicação, para que ele não seja interpretado como um wildcard antes mesmo de ser recebido pelo `expr`, então use `\*` ou `'*'`. O mesmo vale para os parênteses, use `\( ... \)`, ou `'(' ... ')'`
 
 ```sh
 expr 2 + 2  # "4"
@@ -551,10 +549,10 @@ expr 2 '*' 3  # "6"
 expr 8 \* 0.5 # "expr: non-integer argument"
 expr 8 / 4 # "2"
 expr 8 / 5 # "1" - A divisão é inteira
-expr \( 3 + 7 \) / 2  # "5"
+expr \( 3 + 7 \) / \( 1 + 1 \)  # "5"
 ```
 
-Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém há outro incoveniente, você tem que passar as contas para ele por pipe. Ele não processa os argumentos. E contas com muitas casas decimais use `bc -l`.
+Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém há outro incoveniente, você tem que passar as contas para ele por redirecionamento. Ele não processa contas pelos argumentos. E para contas com muitas casas decimais, use `bc -l`.
 
 ```sh
 echo "2 + 2" | bc  # "4"
@@ -569,22 +567,25 @@ echo "2.22 / 1.22 * 0.75" | bc  # ".75" - What???
 echo "2.22 / 1.22 * 0.75" | bc -l  # "1.36475409836065573770" - Hmmmm
 ```
 
-Eu nunca usei muito o `bc`, mas parece que ele é capaz de fazer [muito mais][wiki-bc]. Se você precisar de expressões matemáticas complexas, dê uma olhada com carinho.
+Eu nunca usei muito o `bc`, mas parece que ele é capaz de fazer [bem mais][wiki-bc]. Se você precisar de expressões matemáticas complexas, dê uma olhada na sua documentação com carinho.
 
 [wiki-bc]: https://en.wikipedia.org/wiki/Bc_(programming_language)#GNU_bc
 
 ## Manipulação de texto
 
-Umas das coisas mais comuns que você vai fazer em Shell Script é manipular texto. Por isso é bom que você saiba fazer isso bem. Minha sugestão é que você aprenda bem, um dos seguintes: `sed`, `awk` ou `perl`. Eu costumo usar o `sed`, e explicar como ele funciona é um tutorial em si. Mas veja algumas coisas básica que você pode fazer com `sed`.
+Umas das coisas mais comuns que você vai fazer em Shell Script é manipular texto. Por isso é bom que você saiba fazer isso bem. Minha sugestão é que você aprenda bem, um dos seguintes programas: `sed`, `awk` ou `perl`. Eu costumo usar o `sed`. E explicar como ele funciona é um tutorial à parte. Mas veja algumas coisas básica que você pode fazer com `sed`.
 
 ```sh
 # Imprime todo o texto recebido, porém substituindo "banana" por "maçã"
-sed 's/banana/maça/'
+echo "banana-banana" | sed 's/banana/maça/'  # "maça-banana"
 # Imprime apenas as linhas que começam com "Erro" ou "erro"
-sed -nr '/^[Ee]rror/p'
-# Formata números de telefone: 27988882222 para (27) 9 8888-2222
-# '.' poderia ser '[[:digit:]]' para ficar mais específico
-sed -r 's/.{2}.{1}.{4}.{4})/(\1) \2 \3-\4/'
+echo -e "Uva\nErro 1\nPêra\nerro2-critico" | sed -nr '/^[Ee]rro/p'  # "Erro 1\nerro2-critico"
+# Formata um número de telefone
+echo '27988882222' | sed -r 's/(.{2})(.{1})(.{4})(.{4})/(\1) \2 \3-\4/'  # "(27) 9 8888-2222"
+# Pega apenas o nome do arquivo
+echo "fotos/viagem/familia.jpg" | sed -r 's;.*/([a-Z]+)\..+;\1;'  # "familia"
 ```
 
-Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido.
+Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido. Eu, pessoalmente, aprendi o que sei de `sed` (30%, talvez) usando uma [página na internet que parecia da década de 80 ou 90][sed]. Mas sinta-se livre para buscar qualquer fonte que possa te ajudar.
+
+[sed]: http://www.grymoire.com/Unix/Sed.html
