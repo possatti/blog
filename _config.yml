@@ -67,7 +67,7 @@ timezone: America/Fortaleza
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://lucas.possatti.com.br/
+url: http://possatti.com.br/
 root: /
 permalink: :title/
 permalink_defaults:
