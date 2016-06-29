@@ -5,15 +5,15 @@ tags: [shell script]
 
 Neste post vou explicar um pouco de tudo o que eu sei sobre shell script. Eu comecei a usar shell script porque eu queria automatizar algumas tarefas minhas. E meu gosto pela linguagem começou pela minha fascinação. Eu lia alguns scripts, mas não entendia nada! Além disso eu percebia o potencial da linguagem, as coisas que eu poderia criar com aquilo.
 
-Shell script é uma linguagem com uma síntaxe extranhíssima e muito diferente de qualquer outra linguagem que eu conhecia antes. Eu tinha experiência com linguagens como Python, Java, um pouco de C e outras. E estudando shell script eu aprendi muita coisa que eu não conhecia, e que pode ser aplicado em outras linguagens. Então depois de estudar, sinto que conheço mais sobre programação de forma geral. Estudar shell script também me permitiu conhecer melhor como funciona a arquitetura de programas e processos do Linux. Antes disso, eu não sabia o que era `stdout` e `stdin` por exemplo. E hoje eu percebo que esse é um conhecimento bem útil e que eu não tinha antes.
+Shell script é uma linguagem com uma sintaxe extranhíssima e muito diferente de qualquer outra linguagem que eu conhecia antes. Eu tinha experiência com linguagens como Python, Java, um pouco de C e outras. E estudando shell script eu aprendi muita coisa que eu não conhecia, e que pode ser aplicado em outras linguagens. Então depois de estudar, sinto que conheço mais sobre programação de forma geral. Estudar shell script também me permitiu conhecer melhor como funciona a arquitetura de programas e processos do Linux. Antes disso, eu não sabia o que era `stdout` e `stdin` por exemplo. E hoje eu percebo que esse é um conhecimento bem útil e que eu não tinha antes.
 
 Apesar da sintaxe estranha, shell script é uma linguagem forte e capaz de muita coisa. Imagine o seguinte. Em seu computador você tem programas de todos os tipos. Alguns escritos em C, outros que foram escritos em Python, Java, Perl e etc. Agora imagine utilizar o poder de cada programa desses em coletivo para construir algo maior. É isso que você vai fazer. Usando shell script você irá orquestrar chamadas a esses programas, para cumprir um objetivo específico. Uau, isso é poderoso. É claro que você pode fazer isso em qualquer linguagem, mas shell script foi feito para isso!
 
 Se você se interessou até aqui, continue lendo. Garanto que você vai aprender algo interessante. Porém, antes de começar, algumas sugestões:
- - Se você nunca aprendeu programação antes, te sugiro fortemente, e *enfáticamente* que você não começe por shell script. Aprenda Python, C/C++, Java, PHP ou qualquer outra linguagem e depois volte aqui. Sério!
+ - Se você nunca aprendeu programação antes, te sugiro fortemente, e *enfáticamente* que você não comece por shell script. Aprenda Python, C/C++, Java, PHP ou qualquer outra linguagem e depois volte aqui. Sério!
  - E para seguir com o que eu vou explicar aqui, você deve estar um pouco acostumado a usar o terminal. Do contrário você vai ter um pouco de dificuldade.
 
-Se você perceber que eu não abordei algo importante, ou se algum dos exemplos está errado, ou se tem qualquer outra sugestão, por favor, deixe um comentário.
+Você irá perceber que muitas vezes eu vou ser breve e sucinto em certos assuntos. Principalmente aqueles que você provavelmente já viu em outras linguagens de programação. Outras vezes será porque não tive tempo de expandir e escrever da melhor forma possível. Se você perceber que eu não abordei algo importante, ou se algum dos exemplos está errado, ou se tem qualquer outra sugestão, por favor, deixe um comentário.
 
 Vamos começar.
 
@@ -39,17 +39,10 @@ Vamos começar.
  - [Matemática](#Matematica)
  - [Manipulação de texto](#Manipulacao-de-texto)
 
-<%- toc(page.content) %>
-
-<!-- <%- toc(post.content) %> -->
-
-[toc]
-
-<!-- toc -->
 
 ## Diferentes Shells
 
-Existem muitas [Shells][unix-shell] diferentes. Muitas mesmo! E cada uma delas tem uma linguagem de script diferente. Apesar disso a maioria das Shells apresentam algum nível de compatíbilidade com a [Bourne Shell][sh] (`sh`), que foi uma das primeiras a existir. Algumas das Shells mais usadas são:
+Existem muitas [Shells][unix-shell] diferentes. Muitas mesmo! E cada uma delas tem uma linguagem de script diferente. Apesar disso a maioria das Shells apresentam algum nível de compatibilidade com a [Bourne Shell][sh] (`sh`), que foi uma das primeiras a existir. Algumas das Shells mais usadas são:
  - sh ([Bourne shell][sh])
  - bash ([Bourne-Again shell][bash])
  - dash ([Debian Almquist shell][dash])
@@ -98,7 +91,7 @@ $ sh script.sh
 Hello world
 ```
 
-Voilà! Agora você já sabe como criar e executar um shell script. Você já pode pegar seu certificado de "Shell Script Noob" na recepção e ir embora, ou continuar com o resto do guia para ganhar o certificado de "Shell Script Master". ;)
+*Voilà*! Agora você já sabe como criar e executar um shell script. Você já pode pegar seu certificado de "Shell Script Noob" na recepção e ir embora, ou continuar com o resto do guia para ganhar o certificado de "Shell Script Master". ;)
 
 
 ## O básico
@@ -129,7 +122,7 @@ Você também pode executar mais de um comando na mesma linha, separando os coma
 echo -n "Hello"; echo -n "World"; echo "!";
 ```
 
-E a identação também não importa.
+E a indentação também não importa.
 
 ```sh
 echo -n "Hello"
@@ -137,7 +130,7 @@ echo -n "Hello"
 		echo -n "!"
 ```
 
-Mas, por favor, idente seu código de forma intuitiva e organizada. Não é só porque você está usando a linguagem mais feia já inventada que você precisa escrever o código mais feio já inventado.
+Mas, por favor, indente seu código de forma intuitiva e organizada. Não é só porque você está usando a linguagem mais feia já inventada que você precisa escrever o código mais feio já inventado.
 
 ### Shebang (#!)
 
@@ -177,7 +170,7 @@ Alguns comandos você irá usar com mais frequência do que outros. É important
  - `rm`: Apaga um arquivo ou diretório.
  - `mv`: Move um arquivo ou diretório.
  - `cp`: Copia um arquivo ou diretório.
- - `echo`: Excreve um texto na tela.
+ - `echo`: Escreve um texto na tela.
  - `test`: Veremos na parte de condicionais.
  - `grep`: Imprime linhas que correspondem à um padrão.
  - `sed`: Modifica e filtra texto.
@@ -196,7 +189,7 @@ E tenha em mente que as páginas dos manuais podem ser diferentes dependendo da 
 
 ### Wildcards (Globs)
 
-[Globs][wiki-globs] são um tipo de [*Wildcard*][wildcards] usados para selecionar arquivos em sistemas Unix. São caractéres que representam uma sequência genérica de caractéres. `?` representa qualquer caractere. E `*`, qualquer quantidade de qualquer caractere.
+[*Globs*][wiki-globs] são um tipo de [*Wildcard*][wildcards] usados para selecionar arquivos em sistemas Unix. São caracteres que representam uma sequência genérica de caracteres. `?` representa qualquer caractere. E `*`, qualquer quantidade de qualquer caractere.
 
 [wildcards]: https://en.wikipedia.org/wiki/Wildcard_character
 [wiki-globs]: https://en.wikipedia.org/wiki/Glob_%28programming%29
@@ -214,12 +207,12 @@ rm $HOME/fotos/viagem/*-2015-01-??.jpg  # Remove as fotos de janeiro de 2015.
 rm $HOME/fotos/viagem/*.jpg  # Remove todas as fotos da viagem.
 ```
 
-Globs são muito úteis, e você deveria aprender a usar bem, pelo menos, o `*`.
+*Globs* são muito úteis, e você deveria aprender a usar bem, pelo menos, o `*`.
 
 
 ## Variáveis
 
-Chega daquelas discuções sobre o que é melhor: tipagem forte, ou tipagem fraca. Ao contário da maioria das linguagens de programação, em que você tem vários tipos de variáveis (integer, string, boolean, etc), em shell script você tem apenas um tipo de variável... Strings!
+Chega daquelas discussões sobre o que é melhor: tipagem forte, ou tipagem fraca. Ao contrário da maioria das linguagens de programação, em que você tem vários tipos de variáveis (integer, string, boolean, etc), em shell script você tem apenas um tipo de variável... Strings!
 
 Criar uma variável é bem simples:
 
@@ -227,19 +220,19 @@ Criar uma variável é bem simples:
 variavel="Conteúdo da variável"
 ```
 
-**Importante:** não coloque espaço ao redor do `=`; não começe com números; não use hífen `-`; não use caracteres especiais como `ç`, `á`, `火災` e nem emojis `😀`, `😂`.
+**Importante:** não coloque espaço ao redor do `=`; não comece com números; não use hífen `-`; não use caracteres especiais como `ç`, `á`, `火災` e nem emojis `😀`, `😂`.
 
 ```sh
 # Não use nomes que nem esses:
-98bottles="98"  # Não começe com números.
-bad-variable="crap"  # Não use hífens '-'.
+98bottles="98"  # Não comece com números.
+bad-variable="crap"  # Não use hífen '-'.
 erro = "erro"  # Não coloque espaços ao redor do '='.
 maçã="maca"  # Não use caracteres especiais nos nomes.
 
 # Use nomes que nem esses:
 bottles_n_98=98  # As aspas são opcionais quando o conteúdo da variável não contém espaços.
 good_variable="(y)"  # Use underline '_' como alternativa para o hífen '-'.
-CamelCase="Camelo"  # Máu gosto, porém é permitido.
+CamelCase="Camelo"  # Mau gosto, porém é permitido.
 maca=maçã-火災-😀  # No conteúdo você pode usar caracteres especiais. 👍
 ```
 
@@ -259,7 +252,7 @@ echo "$HOME"  # Imprime, ex: /home/possatti
 echo "A home do usuário '$USER' é '$HOME'" # ex: A home do usuário 'possatti' é '/home/possatti'
 ```
 
-Para ler uma variável do `stdin` (mais tarde eu explico sobre File Descriptors), ou seja, algum valor que o usuário tenha digitado, use o comando `read`. Exemplo:
+Para ler uma variável do `stdin` (mais tarde eu explico sobre *File Descriptors*), ou seja, algum valor que o usuário tenha digitado, use o comando `read`. Exemplo:
 
 ```sh
 echo -n "Digite seu nome: "
@@ -322,7 +315,7 @@ test 3 -ge 2 # ge: greater-than or iqual = maior ou igual
 test 2 -lt 3 # lt: less-than = menor-quê
 test 2 -le 3 # le: less-than or iqual = menor ou igual
 test 0 -ne 1 # ne: not-iqual = os inteiros não são iguais
-test -n "Texto"  # n: String tem mais que zero caractéres
+test -n "Texto"  # n: String tem mais que zero caracteres
 test -z ""  # z: String tem zero carácteres
 test "Goiaba" == "Goiaba" # ==: As Strings são iguais
 test "Goiaba" != "Mamão" # ==: As Strings são diferentes
@@ -350,7 +343,7 @@ if rm saci-pererê.txt; then echo "Saci foi apagado."; fi
 test -f saci-pererê.txt  # Testa se o arquivo existe.
 if [ $? -eq 0 ]; then  # O valor do comando anterior (test) entra no lugar de '$?'.
 	echo "Saci ainda existe!"
-	exit 1  # Saímos com erro, pq o Saci não devia mais existir.
+	exit 1  # Saímos com erro, porque o Saci não devia mais existir.
 else
 	exit 0  # Saci deixou de existir. Sucesso!
 fi
@@ -359,7 +352,7 @@ fi
 
 ## Switch case
 
-Outra estrutura com uma sintáxe curiosa. Se você achava o `if` estranho, é melhor se sentar. Surpreendemente ele é mais útil do que parece, pela forma como ele trata as strings. Você pode usar wildcards (`*` e `?`) para enriquecer as expressões usadas no switch.
+Outra estrutura com uma sintaxe curiosa. Se você achava o `if` estranho, é melhor se sentar. Surpreendentemente ele é mais útil do que parece, pela forma como ele trata as strings. Você pode usar wildcards (`*` e `?`) para enriquecer as expressões usadas no switch.
 
 ```sh
 #!/bin/sh
@@ -457,7 +450,7 @@ Se você quiser trollar um amigo que usa Ubuntu, execute o script seguinte no co
 ```sh
 #!/bin/sh
 
-# Número de cíclos do while para criar uma nova instância
+# Número de ciclos do while para criar uma nova instância
 # do gnome-terminal.
 ciclos_para_nova_instancia=1000
 
@@ -465,20 +458,20 @@ ciclos=0
 while true
 do
 	echo "All work and no play makes Jack a dull boy"
-	# Incrementa o número de cíclos.
+	# Incrementa o número de ciclos.
 	ciclos=`expr $ciclos + 1`
 	# Verifica se chegou o momento de criar uma nova instância.
 	if [ "$ciclos" -eq "$ciclos_para_nova_instancia" ]
 	then
 		# Cria uma nova instância do gnome-terminal, executando o mesmo script.
 		gnome-terminal -x sh dull-boy.sh
-		# Reinicia a contagem dos cíclos.
+		# Reinicia a contagem dos ciclos.
 		ciclos=0
 	fi
 done
 ```
 
-O script irá imprimir `"All work and no play makes Jack a dull boy"` indeterminadamente. E a cada mil iterações, irá instânciar um novo terminal executando o mesmo script. Então seguindo uma curva exponêncial, em pouco tempo você terá dezenas ou centenas de terminais na tela, todos imprimindo `"All work and no play makes Jack a dull boy"` ininterruptamente.
+O script irá imprimir `"All work and no play makes Jack a dull boy"` indeterminadamente. E a cada mil iterações, irá instanciar um novo terminal executando o mesmo script. Então seguindo uma curva exponencial, em pouco tempo você terá dezenas ou centenas de terminais na tela, todos imprimindo `"All work and no play makes Jack a dull boy"` ininterruptamente.
 
 Você pode tentar parar cada script com `Ctrl+C`. Porém chega uma hora que a única solução razoável é esperar que o sistema operacional congele os processos, ou, mais fácil, reiniciar o computador.
 
@@ -505,7 +498,7 @@ Se o seu script tiver recebido apenas dois argumentos e você tentar acessar, di
 
 Quando um argumento tem a forma `-e` ou `--exemplo`, ele é chamado de uma opção, e geralmente é... opcional na chamada de um programa. Você usou opções este tempo inteiro (`echo -n`, `rm -rf`, etc), deve saber como elas funcionam. Mas só para o caso de você não saber, vou explicar um pouquinho. Algumas opções são chamadas de forma isolada, como `--quiet`, e `--help`, e outras devem ser acompanhadas de um valor como: `--garrafas=12`, `--garrafas 12`, `-g12`. Ou: `--arquivo="file.txt"`, `--arquivo "file.txt"`. As opções podem ser usadas, não importa a ordem: `cmd --input "i.txt" --output "o.txt"` deveria ser a mesma coisa que `cmd --output "o.txt" --input "i.txt"`. E as opções geralmente são misturadas com argumentos: `echo "hello" -n` (`n` é uma opção e `"hello"`, um argumento). E muitas opções que são escritas por extenso também tem uma forma abreviada, como `--help` é equivalente à `-h`, e `--quiet` é equivalente à `-q`. Quando você usa a forma abreviada, muitas vezes você também pode aglutinar as formas abreviadas, por exemplo `rm -rf` é equivalente à `rm -r -f`.
 
-É claro que nem todos os programas vão seguir essas regras para suas interfaces, mas essas são regras que você vai observar na maioria dos programas de linha de comando. Existem excessões, como exemplo, o programa `java` não têm opções abreviadas e as opções extensas usam um único hífen, tipo `java -version` ou `java -help`. (Para o caso de dúvida, programas feitos em Java podem ter qualquer interface que eles quiserem. Eu só quis dizer que o executável `java` funciona dessa forma.)
+É claro que nem todos os programas vão seguir essas regras para suas interfaces, mas essas são regras que você vai observar na maioria dos programas de linha de comando. Existem exceções, como exemplo, o programa `java` não têm opções abreviadas e as opções extensas usam um único hífen, tipo `java -version` ou `java -help`. (Para o caso de dúvida, programas feitos em Java podem ter qualquer interface que eles quiserem. Eu só quis dizer que o executável `java` funciona dessa forma.)
 
 E repare que apesar de `--arquivo "file.txt"` ser uma única opção, na shell eles são visto como dois argumentos separados. Shell script não diferencia argumentos de opções por você. Para o shell script, tudo é argumento.
 
@@ -557,13 +550,13 @@ echo "LARANJA_123" | tr '[:upper:]' '[:lower:]' | tr -d '[_0-9]'
 
 Mais um pipe agora. Dessa vez, o `stdout` do primeiro `tr` não é impresso, mas é redirecionado para o `stdin` do segundo `tr`. O segundo `tr` irá ler o texto de seu `stdin`, modificá-lo (remover os números e underline `_`), e escrever em seu `stdout`. Como não há mais nenhuma redireção, seu `stdout` será impresso.
 
-Também podemos fazer redireções usando arquivos. `>` é usado para redirecionar o `stdout` para um arquivo, porém apaga o conteúdo do arquivo se ele já existir. `>>` faz o mesmo que `>`, porém não apaga o conteúdo original do arquivo. Ao final do script abaixo, teremos um arquivo com três frutas: Cajú, Mamão e Pêra.
+Também podemos fazer redireções usando arquivos. `>` é usado para redirecionar o `stdout` para um arquivo, porém apaga o conteúdo do arquivo se ele já existir. `>>` faz o mesmo que `>`, porém não apaga o conteúdo original do arquivo. Ao final do script abaixo, teremos um arquivo com três frutas: Caju, Mamão e Pêra.
 
 ```sh
 # Escreve "Banana" no arquivo "frutas.txt".
 echo "Banana" > frutas.txt
-# Apaga o conteúdo do arquivo inteiro, e depois escreve "Cajú" nele.
-echo "Cajú" > frutas.txt
+# Apaga o conteúdo do arquivo inteiro, e depois escreve "Caju" nele.
+echo "Caju" > frutas.txt
 # Escreve "Mamão" no final do arquivo, sem apagar seu conteúdo.
 echo "Mamão" >> frutas.txt
 # Escreve "Pêra_123" no final do arquivo, sem apagar seu conteúdo.
@@ -606,7 +599,7 @@ Perceba que depois do `<<` temos um token (`EOF`) que abre o texto do [lerolero.
 
 [lerolero]: http://www.lerolero.com/
 
-Agora um pequeno exercício mental. Tente entender quê texto está servindo de entrada para qual comando. Boa sorte.
+Agora um pequeno exercício mental. Tente entender que parte de texto está servindo de entrada para qual comando. Boa sorte.
 
 ```sh
 #!/bin/sh
@@ -617,7 +610,7 @@ BLOWING
 MIND
 ```
 
-Cada file descriptor tem um número associado: `stdin`, `0`; `stdout`, `1`; e `stderr`, `2`. É comum redirecionarmos o `stderr` de um programa para o `stdout` do mesmo programa. Fazemos isso usando `2>&1`. Isso é muito útil quando temos um programa que escreve coisas importante para `stderr`, porém nós queremos gravar em um arquivo, por exemplo. Para isso fazemos `prog 2>&1 > meu.log`. Ou ainda podemos gravar o `stdout` e o `stderr` em diferentes arquivos: `prog 1> meu.log 2> erros.log`.
+Cada *file descriptor* tem um número associado: `stdin`, `0`; `stdout`, `1`; e `stderr`, `2`. É comum redirecionarmos o `stderr` de um programa para o `stdout` do mesmo programa. Fazemos isso usando `2>&1`. Isso é muito útil quando temos um programa que escreve coisas importante para `stderr`, porém nós queremos gravar em um arquivo, por exemplo. Para isso fazemos `prog 2>&1 > meu.log`. Ou ainda podemos gravar o `stdout` e o `stderr` em diferentes arquivos: `prog 1> meu.log 2> erros.log`.
 
 E se quisermos direcionar o `stdout` para `stderr`, usamos `1>&2`. Você pode usar isso para escrever em `stderr` no seu script através de `echo 1>&2`.
 
@@ -626,7 +619,7 @@ echo "Hello"  # Imprime através do `stdout`
 echo "World" 1>&2  # Imprime na tela, porém através do `stderr`
 ```
 
-Redireções também funcionam com estrutras como `for` e `while`. Quando você chega nesse nível, as coisas podem ficar extremamente confusas. O exemplo abaixo, lê as linhas de um arquivo `lower.txt`, colocando cada uma delas na variável `$linha`, que é `echo`ada para `tr`, que transforma tudo em maíusculas. Porém o `stdout` de `tr` vai para um segundo `tr` que apaga as vogais do texto. E em seguida, o resultado é escrito em `UPPER.txt`. Loucura.
+Redireções também funcionam com estruturas como `for` e `while`. Quando você chega nesse nível, as coisas podem ficar extremamente confusas. O exemplo abaixo, lê as linhas de um arquivo `lower.txt`, colocando cada uma delas na variável `$linha`, que é `echo`ada para `tr`, que transforma tudo em maiúsculas. Porém o `stdout` de `tr` vai para um segundo `tr` que apaga as vogais do texto. E em seguida, o resultado é escrito em `UPPER.txt`. Loucura.
 
 ```sh
 #!/bin/sh
@@ -647,7 +640,7 @@ Funções funcionam como mini-scripts contidos no seu script. Elas são declarad
 #!/bin/sh
 
 somar() {
-	# Soma os dois argumentos recebidos *pela função*
+	# Soma os dois argumentos recebidos *pela função*.
 	expr $1 '+' $2
 }
 
@@ -666,7 +659,7 @@ echo "Soma total: $resultado"
 
 Perceba que dentro da função `$1` e `$2` são argumentos recebidos **pela função**, e não pelo script. Do lado de fora da função, nós estamos usando o `$1` que é o primeiro argumento do nosso script. Veja que as duas coisas não se misturam.
 
-**Cuidado:** as funções podem alterar variáveis do escobo global:
+**Cuidado:** as funções podem alterar variáveis do escopo global:
 
 ```sh
 troll() {
@@ -678,7 +671,7 @@ troll  # Muda o valor de 'x'
 echo $x  # Imprime '2'
 ```
 
-Eu acho que isso é o que tem de mais importante para falar sobre as funções em shell script. Acho que você deve saber o que fazer a partir daqui. Mas me sinto culpado de não colocar um exemplo um pouco mais complexo. Então abaixo está uma função que cálcula o fatorial de um número.
+Eu acho que isso é o que tem de mais importante para falar sobre as funções em shell script. Acho que você deve saber o que fazer a partir daqui. Mas me sinto culpado de não colocar um exemplo um pouco mais complexo. Então abaixo está uma função que calcula o fatorial de um número.
 
 ```sh
 fatorial() {
@@ -716,7 +709,7 @@ expr 8 / 5 # "1" -- A divisão é inteira
 expr \( 3 + 7 \) / \( 1 + 1 \)  # "5"
 ```
 
-Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém este programa possui outro incoveniente: você tem que passar as contas para ele por redirecionamento, pois ele não processa contas pelos argumentos. E para contas com muitas casas decimais, use `bc -l`.
+Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremamente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém este programa possui outro inconveniente: você tem que passar as contas para ele por redirecionamento, pois ele não processa contas pelos argumentos. E para contas com muitas casas decimais, use `bc -l`.
 
 ```sh
 echo "2 + 2" | bc  # "4"
@@ -757,6 +750,6 @@ Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. 
 
 ## Conclusão
 
-Essa é a despedida. Depois de tudo isso, eu agora espero que você consiga usar shell script para resolver seus problemas. Se ficou faltando alguma coisa, ou não deu para entender alguma parte, pode postar o seu feedback aí nos comentários.
+Essa é a despedida. Depois de tudo isso, eu agora espero que você consiga usar shell script para resolver seus problemas. Se ficou faltando alguma coisa, ou não deu para entender alguma parte, pode postar o seu feedback aqui nos comentários.
 
 É isso aí. Abraço.
