@@ -1,7 +1,14 @@
 ---
-title: "Tutorial de Shell Script"
-tags: [shell script]
+title: Tutorial de Shell Script
+description: "Neste post eu explico sobre várias estruturas usadas em shell script como: loops, condicionais, pipes, redireção, globs, substituição de comandos e mais."
+tags:
+  - shell script
+comments: true
+share: true
+thumbnail: /images/sh.png
+date: 2016-06-30 12:41:53
 ---
+
 
 Neste post vou explicar um pouco de tudo o que eu sei sobre shell script. Eu comecei a usar shell script porque eu queria automatizar algumas tarefas minhas. E meu gosto pela linguagem começou pela minha fascinação. Eu lia alguns scripts, mas não entendia nada! Além disso eu percebia o potencial da linguagem, as coisas que eu poderia criar com aquilo.
 
@@ -747,6 +754,7 @@ echo "fotos/viagem/familia.jpg" | sed -r 's;.*/([a-Z]+)\..+;\1;'  # "familia"
 Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido. Eu, pessoalmente, aprendi o que sei de `sed` (30% do total, talvez) usando uma [página na internet que parecia ter sido feita no período jurássico][sed]. Mas sinta-se livre para buscar qualquer fonte que possa te ajudar.
 
 [sed]: http://www.grymoire.com/Unix/Sed.html
+
 
 ## Conclusão
 
