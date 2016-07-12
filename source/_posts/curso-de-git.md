@@ -16,6 +16,8 @@ Criar esse curso foi uma experiência totalmente nova para mim. E nos primeiros 
 
 Eu queria ter editado cada um dos vídeos que eu gravei em meu computador, para cortar algumas partes desnecessárias e alguns erros, e para dar uma polida nos vídeos. Mas, infelizmente, eu não consegui editar os vídeos de forma satisfatória. E como já estava demorando muito, resolvemos publicar os vídeos da forma que foi possível (sem edição).
 
-Então, apesar de não estar perfeito, vos apresento o curso: [clique aqui][curso].
+Então, apesar de não estar perfeito, vos apresento o [curso][curso].
 
 [curso]: https://youtu.be/TC5r2qGiqcI?list=PLo7sFyCeiGUdIyEmHdfbuD2eR4XPDqnN2
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TC5r2qGiqcI?list=PLo7sFyCeiGUdIyEmHdfbuD2eR4XPDqnN2" frameborder="0" allowfullscreen></iframe>
