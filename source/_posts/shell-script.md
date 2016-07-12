@@ -28,23 +28,24 @@ Vamos começar.
 
  - [Diferentes Shells](#Diferentes-Shells)
  - [Hello World](#Hello-World)
- - [O básico](#O-básico)
+ - [O básico](#O-basico)
    - [Shebang (#!)](#Shebang)
    - [Comandos úteis](#Comandos-uteis)
    - [Manuais](#Manuais)
-   - [Wildcards](#Wildcards)
- - [Variáveis](#Variáveis)
+   - [Wildcards (Globs)](#Wildcards-Globs)
+ - [Variáveis](#Variaveis)
  - [Substituição de comandos](#Substituicao-de-comandos)
  - [Condicionais](#Condicionais)
  - [Switch case](#Switch-case)
- - [Argumentos](#Argumentos)
  - [Loops](#Loops)
    - [For](#For)
    - [While](#While)
+ - [Argumentos](#Argumentos)
  - [Pipe e redireção](#Pipe-e-redirecao)
  - [Funções](#Funcoes)
  - [Matemática](#Matematica)
  - [Manipulação de texto](#Manipulacao-de-texto)
+ - [Conclusão](#Conclusao)
 
 
 ## Diferentes Shells
@@ -90,7 +91,7 @@ Usando seu editor de texto, digite o seguinte código:
 echo Hello World
 ```
 
-A primeira linha é um shebang (`#!`) e identifica o tipo de script que estamos criando, vou explicar melhor sobre o shebang depois. E na segunda linha, `echo` irá imprimir "Hello World". Agora, salve e feche o editor de texto. (No nano você usa `Ctrl+O` (letra Ó) para salvar, e `Ctrl+X` para sair.) Depois, digite o comando seguinte no mesmo terminal e você verá o `Hello World`:
+A primeira linha é um shebang (`#!`) e identifica o tipo de script que estamos criando, vou explicar melhor sobre o shebang depois. E na segunda linha, `echo` irá imprimir "Hello World". Agora, salve e feche o editor de texto. (No `nano` você usa `Ctrl+O` (letra Ó) para salvar, e `Ctrl+X` para sair.) Depois, digite o comando seguinte no mesmo terminal e você verá o `Hello World`:
 
 
 ```sh
@@ -141,11 +142,11 @@ Mas, por favor, indente seu código de forma intuitiva e organizada. Não é só
 
 ### Shebang (#!)
 
-No linux, é muito comum você colocar um [shebang][shebang] na primeira linha de um script. Ele serve para que seu computador identifique qual programa roda aquele script. Ele só funciona se for a primeira linha do arquivo. Aqui estão alguns exemplos:
+No linux, é muito comum você colocar um [shebang][shebang] (`#!`) na primeira linha de um script. Ele serve para que seu computador identifique qual programa roda aquele script. Ele só funciona se for a primeira linha do arquivo. Aqui estão alguns exemplos:
 
 [shebang]: https://pt.wikipedia.org/wiki/Shebang
 
-```sh
+```
 #!/bin/sh
 #!/usr/bin/python
 #!/usr/bin/ruby
@@ -192,16 +193,16 @@ Quando você tiver dúvida sobre como um comando funciona, ou qual a sua interfa
 
 **Você deve se acostumar a ler os manuais**. Acostume-se a encontrar os subcomandos existentes e as opções (e.g. `--opcao`) que você precisa. E busque compreender mais ou menos a seção `SYNOPSIS` das páginas dos manuais.
 
-E tenha em mente que as páginas dos manuais podem ser diferentes dependendo da shell que você está usando. A maioria dos programas é a mesma coisa, porém comandos mais básicos como `echo` e `ls` comumente funcionam um pouco diferente dependendo da shell. Eu uso o `fish` diáriamente, e, quando estou fazendo um script, vez ou outra, tenho que entrar no `bash` só para consultar o manual de algum comando. Isso já me deu dor de cabeça algumas vezes. Se você usa o `bash`, você não deve ter muitos problemas com isso, mas fica esperto.
+E tenha em mente que as páginas dos manuais podem ser diferentes dependendo da shell que você está usando. A maioria dos programas é a mesma coisa, porém alguns comandos como `read`, por exemplo, podem funcionar um pouco diferente dependendo da Shell. Eu uso o `fish` diáriamente, e, quando estou fazendo um script, vez ou outra, tenho que entrar no `bash` só para consultar o manual de algum comando. Isso já me deu dor de cabeça algumas vezes. Se você usa o `bash`, você não deve ter muitos problemas com isso, mas fica esperto.
 
 ### Wildcards (Globs)
 
-[*Globs*][wiki-globs] são um tipo de [*Wildcard*][wildcards] usados para selecionar arquivos em sistemas Unix. São caracteres que representam uma sequência genérica de caracteres. `?` representa qualquer caractere. E `*`, qualquer quantidade de qualquer caractere.
+[*Globs*][wiki-globs] são um tipo de [*Wildcard*][wildcards], e são usados para selecionar arquivos em sistemas Unix. São caracteres que representam uma sequência genérica de caracteres. `?` representa qualquer caractere. E `*`, qualquer quantidade de qualquer caractere.
 
 [wildcards]: https://en.wikipedia.org/wiki/Wildcard_character
 [wiki-globs]: https://en.wikipedia.org/wiki/Glob_%28programming%29
 
-Vamos supor que você tem um diretório com os seguintes arquivos: `script.pl`, `script.sh`, `script.pl`, `script.test.sh`, `test.c` e `test.java`. Se você entrar nesse diretório e usar o comando `rm test.*`, você irá remover os arquivos `test.c` e `test.java`, mas os outros arquivos ficaram intactos.
+Vamos supor que você tem um diretório com os seguintes arquivos: `script.pl`, `script.sh`, `script.pl`, `script.test.sh`, `test.c` e `test.java`. Se você entrar nesse diretório e usar o comando `rm test.*`, você irá remover os arquivos `test.c` e `test.java`, mas os outros arquivos ficarão intactos.
 
 Isso funciona por uma expansão que ocorre antes mesmo do programa ser executado. No caso anterior, `rm test.*` será expandido para `rm test.c test.java`, e então o programa é invocado com estes dois argumentos.
 
@@ -227,7 +228,7 @@ Criar uma variável é bem simples:
 variavel="Conteúdo da variável"
 ```
 
-**Importante:** não coloque espaço ao redor do `=`; não comece com números; não use hífen `-`; não use caracteres especiais como `ç`, `á`, `火災` e nem emojis `😀`, `😂`.
+**Importante:** não coloque espaços ao redor do `=`; não comece com números; não use hífen `-`; não use caracteres especiais como `ç`, `á`, `火災` e nem emojis `😀`, `😂`.
 
 ```sh
 # Não use nomes que nem esses:
@@ -251,7 +252,7 @@ echo texto  # Pegadinha. Vai imprimir "texto".
 echo $texto  # Vai imprimir "Hello World".
 ```
 
-Quando você estiver escrevendo strings, você pode usar `'` ou `"`. Usando `"` o valor das variáveis são colocados no lugar dos seus nomes. Usando `'` o nome dá variável fica do jeito que tá na string. O `'` ignora a existência de variáveis.
+Quando você estiver escrevendo strings, você pode usar `'` ou `"`. Usando `"` o valor das variáveis são colocados no lugar dos seus nomes. Usando `'` o nome dá variável fica do jeito que está na string. O `'` ignora a existência de variáveis.
 
 ```sh
 echo '$HOME'  # Imprime: $HOME
@@ -276,10 +277,11 @@ Também é uma convenção usar nomes de variáveis em letras maiúsculas. E ger
 
 ## Substituição de comandos
 
-As vezes é útil guardarmos a saída de algum programa. Ao invés de imprimir na tela, gostaríamos de pegar esse valor e, por exemplo, guardar em uma variável. Para isso, usamos [substituição de comandos][wiki-command-substitution]: `$(prog)`, ou ``prog``. Até onde eu sei, não há diferença entre as duas formas. Eu, particularmente, prefiro o segundo.
+As vezes é útil guardarmos a saída de algum programa. Ao invés de imprimir na tela, gostaríamos de pegar esse valor e, por exemplo, guardar em uma variável. Para isso, usamos [substituição de comandos][wiki-command-substitution]: `$(prog)`, ou <code>&#x0060;prog&#x0060;</code>. Até onde eu sei, não há diferença entre as duas formas. Eu, particularmente, prefiro o segundo.
 
 ```sh
 echo `pwd`  # Imprime o diretório atual
+echo $(pwd)  # Imprime o diretório atual
 arquivos_de_texto=$(ls *.txt)
 echo $arquivos_de_texto  # Imprime todos os "txt" do diretório atual
 echo "2 + 2 = $(expr 2 + 2)"  # Imprime '2 + 2 = 4'
@@ -318,10 +320,10 @@ Agora que você já sabe que o comando `test` está sendo usado, você já pode 
 ```sh
 test 42 -eq 42 # eq: equal = os inteiros são iguais
 test 3 -gt 2 # gt: greater-than = maior-quê
-test 3 -ge 2 # ge: greater-than or iqual = maior ou igual
+test 3 -ge 2 # ge: greater-than or equal = maior ou igual
 test 2 -lt 3 # lt: less-than = menor-quê
-test 2 -le 3 # le: less-than or iqual = menor ou igual
-test 0 -ne 1 # ne: not-iqual = os inteiros não são iguais
+test 2 -le 3 # le: less-than or equal = menor ou igual
+test 0 -ne 1 # ne: not-equal = os inteiros não são iguais
 test -n "Texto"  # n: String tem mais que zero caracteres
 test -z ""  # z: String tem zero carácteres
 test "Goiaba" == "Goiaba" # ==: As Strings são iguais
@@ -418,11 +420,11 @@ for arquivo in $arquivos_txt; do
 done
 ```
 
-A variável `$arquivos_txt` é uma string que contém o nome de todos os arquivos `.txt` do diretório atual, separados por espaço (` `). O `for` irá quebrar essa string em múltiplos pedaços, separando pelos espaços (` `) e pelas quebras de linha (`\n`). Esses múltiplos pedaços serão passados para a variável `$arquivo`, um de cada vez.
+A variável `$arquivos_txt` é uma string que contém o nome de todos os arquivos `.txt` do diretório atual, separados por espaço. O `for` irá quebrar essa string em múltiplos pedaços, separando pelos espaços e pelas quebras de linha (`\n`). Esses múltiplos pedaços serão passados para a variável `$arquivo`, um de cada vez.
 
 Você também pode usar as palavras chaves `continue` para pular uma iteração e continuar do começo, e `break` para sair do loop.
 
-Quando você desejar iterar sob uma sequência de números, você pode usar o comando `seq`. Exemplo: `seq 3` irá imprimir `1 2 3` (separados por `\n`, na verdade) e `seq 0 3` irá imprimir `0 1 2 3`. No exemplo abaixo, nós criamos uma sequência de 0 à 10, e elevamos cada um deles ao quadrado, e imprimimos.
+Quando você desejar iterar sob uma sequência de números, você pode usar o comando `seq`. Exemplo: `seq 3` irá imprimir `1 2 3` (separados por `\n`, na verdade) e `seq 0 3` irá imprimir `0 1 2 3`. No exemplo abaixo, nós criamos uma sequência de 0 à 10, e elevamos cada um dos números ao quadrado, e imprimimos.
 
 ```sh
 #!/bin/sh
@@ -487,7 +489,7 @@ Se você quiser trollar seu amigo em dobro, coloque uma linha `cd $HOME; sh dull
 
 ## Argumentos
 
-A maioria dos programas de linha de comando recebem e processam argumentos que são passados pelo usuário que estão invocando o programa.
+A maioria dos programas de linha de comando recebem e processam argumentos que são passados pelo usuário que está invocando o programa.
 
 ```sh
 $ comando arg1 arg2 arg3 arg4 
@@ -503,9 +505,11 @@ echo "\$1 \$2 \$3: $1 $2 $3"  # Imprime os primeiros três argumentos.
 
 Se o seu script tiver recebido apenas dois argumentos e você tentar acessar, digamos, o argumento `$3`, o `$3` será substituído por uma string vazia. Para evitar isso, você pode testar se `$3` não é uma string vazia: `test -n "$3"` (as aspas são importantes nesse caso).
 
-Quando um argumento tem a forma `-e` ou `--exemplo`, ele é chamado de uma opção, e geralmente é... opcional na chamada de um programa. Você usou opções este tempo inteiro (`echo -n`, `rm -rf`, etc), deve saber como elas funcionam. Mas só para o caso de você não saber, vou explicar um pouquinho. Algumas opções são chamadas de forma isolada, como `--quiet`, e `--help`, e outras devem ser acompanhadas de um valor como: `--garrafas=12`, `--garrafas 12`, `-g12`. Ou: `--arquivo="file.txt"`, `--arquivo "file.txt"`. As opções podem ser usadas, não importa a ordem: `cmd --input "i.txt" --output "o.txt"` deveria ser a mesma coisa que `cmd --output "o.txt" --input "i.txt"`. E as opções geralmente são misturadas com argumentos: `echo "hello" -n` (`n` é uma opção e `"hello"`, um argumento). E muitas opções que são escritas por extenso também tem uma forma abreviada, como `--help` é equivalente à `-h`, e `--quiet` é equivalente à `-q`. Quando você usa a forma abreviada, muitas vezes você também pode aglutinar as formas abreviadas, por exemplo `rm -rf` é equivalente à `rm -r -f`.
+Quando um argumento tem a forma `-e` ou `--exemplo`, ele é chamado de uma opção, e geralmente é... opcional na chamada de um programa. Você usou opções este tempo inteiro (`echo -n`, `rm -rf`, etc), deve saber como elas funcionam. Mas só para o caso de você não saber, vou explicar um pouquinho.
 
-É claro que nem todos os programas vão seguir essas regras para suas interfaces, mas essas são regras que você vai observar na maioria dos programas de linha de comando. Existem exceções, como exemplo, o programa `java` não têm opções abreviadas e as opções extensas usam um único hífen, tipo `java -version` ou `java -help`. (Para o caso de dúvida, programas feitos em Java podem ter qualquer interface que eles quiserem. Eu só quis dizer que o executável `java` funciona dessa forma.)
+Algumas opções são chamadas de forma isolada, como `--quiet`, e `--help`, e outras devem ser acompanhadas de um valor como: `--garrafas=12`, `--garrafas 12`, `-g12`. Ou: `--arquivo="file.txt"`, `--arquivo "file.txt"`. As opções podem ser usadas, não importa a ordem: `cmd --input "i.txt" --output "o.txt"` deveria ser a mesma coisa que `cmd --output "o.txt" --input "i.txt"`. E as opções geralmente são misturadas com argumentos: `echo "hello" -n` (`n` é uma opção e `"hello"`, um argumento). E muitas opções que são escritas por extenso também tem uma forma abreviada, como: `--help` é equivalente à `-h`; e `--quiet` é equivalente à `-q`. Quando você usa a forma abreviada, muitas vezes você também pode aglutinar as formas abreviadas, por exemplo `rm -rf` é equivalente à `rm -r -f`.
+
+É claro que nem todos os programas vão seguir essas regras para suas interfaces, mas essas são regras que você vai observar na maioria dos programas de linha de comando. Existem exceções, como exemplo, o programa `java` não têm opções abreviadas e as opções extensas usam um único hífen, tipo: `java -version` ou `java -help`. (Para o caso de dúvida, programas feitos em Java podem ter qualquer interface que eles quiserem. Eu só quis dizer que o executável `java` funciona dessa forma.)
 
 E repare que apesar de `--arquivo "file.txt"` ser uma única opção, na shell eles são visto como dois argumentos separados. Shell script não diferencia argumentos de opções por você. Para o shell script, tudo é argumento.
 
@@ -518,7 +522,7 @@ for arg in $@; do
 done
 ```
 
-Outra opção semelhante é usando o comando `shift` juntamente com um `while`. Quando você usa `shift`, o `$2` será colocado no lugar do `$1`; o `$3` no lugar do `$2` e assim em diante. Dessa forma você pode ler o primeiro argumento do `$1`; fazer um `shift`, ler o segundo argumento do `$1`; `shift`, ler terceiro argumento do `$1` também; e etc.
+Outra opção semelhante é usar o comando `shift` juntamente com um `while`. Quando você usa `shift`, o `$2` será colocado no lugar do `$1`; o `$3` no lugar do `$2`; e assim em diante. Dessa forma você pode ler o primeiro argumento através do `$1`; fazer um `shift`, ler o segundo argumento através do `$1`; `shift`, ler terceiro argumento através do `$1` também; e etc.
 
 ```sh
 #!/bin/sh
@@ -541,7 +545,7 @@ Essa é provavelmente a coisa mais interessante que você pode fazer em shell sc
 
 Antes de falar sobre isso, eu tenho que explicar uma coisa mais básica: *File Descriptors*. No mundo do Unix e Linux existe o que nós chamamos de *"file descriptor"*. Qualquer programa têm três *file descriptors*: Standard Input, Standard Output, e Standard Error. Comumente abreviados: `stdin`, `stdout` e `stderr`. O programa irá ler dados do `stdin`, irá escrever em `stdout`, e irá escrever os erros para `stderr`. Muitas vezes, o texto vindo de `stdin` será o texto digitado pelo usuário no teclado. Mas muitas outras vezes, esse texto será recebido de forma programática.
 
-Quando usamos pipe `|`, nós estamos conectando o `stdout` do comando à esquerda, com o `stdin` do comando à direita. É possível fazer vários pipes em sequência também. Você deve imaginar que o texto está fluindo da esquerda para a direita, e que cada comando está modificando o texto, ou agindo de alguma forma sobre ele. Vamos à um exemplo simples:
+Quando usamos pipe `|`, nós estamos conectando o `stdout` do comando à esquerda, com o `stdin` do comando à direita. Também é possível fazer vários pipes em sequência. Você deve imaginar que o texto está fluindo da esquerda para a direita, e que cada comando está modificando o texto, ou agindo de alguma forma sobre ele. Vamos à um exemplo simples:
 
 ```sh
 # Imprime "laranja_123" (minúsculo)
@@ -588,7 +592,7 @@ Também é comum usarmos `<`, `>` e `|` tudo junto. É um pouco difícil de se a
 tr '[:lower:]' '[:upper:]' < frutas.txt | tr -d '[_0-9]' > FRUTAS.TXT
 ```
 
-Pêra! (huehue) Se existe `>` e `>>`, deve existir também `<<`, já que existe `<`. Sim, senhor. E o nome disso é "[Here Document][wiki-here-document]". Ao invés de ler de um arquivo (como `<`) o texto será lido do próprio script.
+Pêra! (huehue) Se existe `>` e `>>`, deve existir também `<<`, já que existe `<`. Sim, senhor. E o nome disso é ["Here Document"][wiki-here-document]. Ao invés de ler de um arquivo (como `<`) o texto será lido do próprio script.
 
 [wiki-here-document]: https://en.wikipedia.org/wiki/Here_document
 
@@ -617,7 +621,7 @@ BLOWING
 MIND
 ```
 
-Cada *file descriptor* tem um número associado: `stdin`, `0`; `stdout`, `1`; e `stderr`, `2`. É comum redirecionarmos o `stderr` de um programa para o `stdout` do mesmo programa. Fazemos isso usando `2>&1`. Isso é muito útil quando temos um programa que escreve coisas importante para `stderr`, porém nós queremos gravar em um arquivo, por exemplo. Para isso fazemos `prog 2>&1 > meu.log`. Ou ainda podemos gravar o `stdout` e o `stderr` em diferentes arquivos: `prog 1> meu.log 2> erros.log`.
+Cada *file descriptor* tem um número associado: `stdin`, `0`; `stdout`, `1`; e `stderr`, `2`. É comum redirecionarmos o `stderr` de um programa para o `stdout` do mesmo programa. Fazemos isso usando `2>&1`. Isso é muito útil quando temos um programa que escreve coisas importantes para `stderr`, porém nós queremos gravar em um arquivo, por exemplo. Para isso fazemos `prog 2>&1 > meu.log`. Ou ainda podemos gravar o `stdout` e o `stderr` em diferentes arquivos: `prog 1> meu.log 2> erros.log`.
 
 E se quisermos direcionar o `stdout` para `stderr`, usamos `1>&2`. Você pode usar isso para escrever em `stderr` no seu script através de `echo 1>&2`.
 
@@ -626,7 +630,7 @@ echo "Hello"  # Imprime através do `stdout`
 echo "World" 1>&2  # Imprime na tela, porém através do `stderr`
 ```
 
-Redireções também funcionam com estruturas como `for` e `while`. Quando você chega nesse nível, as coisas podem ficar extremamente confusas. O exemplo abaixo, lê as linhas de um arquivo `lower.txt`, colocando cada uma delas na variável `$linha`, que é `echo`ada para `tr`, que transforma tudo em maiúsculas. Porém o `stdout` de `tr` vai para um segundo `tr` que apaga as vogais do texto. E em seguida, o resultado é escrito em `UPPER.txt`. Loucura.
+Redireções também funcionam com estruturas como `for` e `while`. Quando você chega nesse nível, as coisas podem ficar extremamente confusas. O exemplo abaixo, lê as linhas de um arquivo `lower.txt`, colocando cada uma delas na variável `$linha`, que é "`echo`ada" para `tr`, que transforma tudo em maiúsculas. Porém o `stdout` de `tr` vai para um segundo `tr` que apaga as vogais do texto. E em seguida, o resultado é escrito em `UPPER.txt`. Loucura.
 
 ```sh
 #!/bin/sh
@@ -636,7 +640,7 @@ while read linha; do
 done < lower.txt | tr -d 'aeiou' > UPPER.txt
 ```
 
-Era possível escrever o script acima de forma mais simples. Mas eu queria fazer assim, para você exercitar seu poderoso cérebro.
+Era possível escrever o script acima de forma mais simples. Mas eu quis fazer assim, para você exercitar seu poderoso cérebro.
 
 
 ## Funções
@@ -678,7 +682,7 @@ troll  # Muda o valor de 'x'
 echo $x  # Imprime '2'
 ```
 
-Eu acho que isso é o que tem de mais importante para falar sobre as funções em shell script. Acho que você deve saber o que fazer a partir daqui. Mas me sinto culpado de não colocar um exemplo um pouco mais complexo. Então abaixo está uma função que calcula o fatorial de um número.
+Eu acho que isso é o que tem de mais importante para falar sobre as funções em shell script. Acho que você deve saber o que fazer a partir daqui. Mas me sinto culpado de não colocar um exemplo um pouco mais complexo. Então abaixo está uma função que calcula o fatorial de um número...
 
 ```sh
 fatorial() {
@@ -716,7 +720,9 @@ expr 8 / 5 # "1" -- A divisão é inteira
 expr \( 3 + 7 \) / \( 1 + 1 \)  # "5"
 ```
 
-Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremamente longas, já que você tem que colocar espaços ao redor de tudo. Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém este programa possui outro inconveniente: você tem que passar as contas para ele por redirecionamento, pois ele não processa contas pelos argumentos. E para contas com muitas casas decimais, use `bc -l`.
+Como você pode ver, `expr` apenas gosta de números inteiros. Além disso, expressões mais complexas ficam extremamente longas, já que você tem que colocar espaços ao redor de tudo.
+
+Para contas um pouco mais complexas, ou quando você quiser usar números decimais, recomendo usar o `bc`. Porém este programa possui outro inconveniente: você tem que passar as contas para ele por redirecionamento, pois ele não processa contas pelos argumentos. E para contas com muitas casas decimais, use `bc -l`.
 
 ```sh
 echo "2 + 2" | bc  # "4"
@@ -738,7 +744,7 @@ Eu nunca usei muito o `bc`, mas parece que ele é capaz de fazer [bem mais][wiki
 
 ## Manipulação de texto
 
-Umas das coisas mais comuns que você vai fazer em shell script é manipular texto. Por isso é bom que você saiba fazer isso bem. Minha sugestão é que você aprenda bem, um dos seguintes programas: `sed`, `awk` ou `perl`. Eu costumo usar o `sed`. Porém explicar como ele funciona é um tutorial à parte. Mas veja algumas coisas básica que você pode fazer com o `sed`.
+Umas das coisas mais comuns que você vai fazer em shell script é manipular texto. Por isso é bom que você saiba fazer isso bem. Minha sugestão é que você aprenda bem, um dos seguintes programas: `sed`, `awk` ou `perl`. Eu costumo usar o `sed`. Porém, explicar como ele funciona é um tutorial à parte. Mas veja algumas coisas básica que você pode fazer com o `sed`.
 
 ```sh
 # Imprime todo o texto recebido, porém substituindo "banana" por "maçã"
@@ -751,7 +757,7 @@ echo '27988882222' | sed -r 's/(.{2})(.{1})(.{4})(.{4})/(\1) \2 \3-\4/'  # "(27)
 echo "fotos/viagem/familia.jpg" | sed -r 's;.*/([a-Z]+)\..+;\1;'  # "familia"
 ```
 
-Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido. Eu, pessoalmente, aprendi o que sei de `sed` (30% do total, talvez) usando uma [página na internet que parecia ter sido feita no período jurássico][sed]. Mas sinta-se livre para buscar qualquer fonte que possa te ajudar.
+Infelizmente não tem como eu explicar aqui com detalhes como funciona o `sed`. Mas, pelo menos, o primeiro exemplo você deve ter entendido. Eu, pessoalmente, aprendi o que sei de `sed` (30% do total, talvez) usando uma [página na internet que parecia ter sido feita no período jurássico][sed]. Sinta-se livre para buscar qualquer fonte que possa te ajudar.
 
 [sed]: http://www.grymoire.com/Unix/Sed.html
 
