@@ -26,5 +26,6 @@ ln _config.hueman.yml themes/hueman/_config.yml
 hexo server
 
 # Deploy when everything is Ok
+hexo clean  # Not sure why
 hexo deploy
 ```
